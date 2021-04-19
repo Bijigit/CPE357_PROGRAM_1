@@ -26,3 +26,9 @@ typedef struct tagBITMAPINFOHEADER{
 
 void populateFileHeader(BITMAPFILEHEADER *header, FILE *fp);
 void populateImageHeader(BITMAPIMAGEHEADER *imageHeader, FILE *fp);
+void getImageData(BITMAPFILEHEADER *fileHeader, FILE *fp, unsigned char *imageData, int imageSize);
+void getImageHeader(BITMAPFILEHEADER *fileHeader, FILE *fp, unsigned char *fullHeader);
+int getImageSize(BITMAPIMAGEHEADER *imageHeader);
+void interpolate(unsigned char *largerData, unsigned char *smallerData, BITMAPIMAGEHEADER *largerHeader, BITMAPIMAGEHEADER *smallerHeader, double blendRatio);
+int getColorIntensity(unsigned char *imageData, int x, int y, int width, int colorOffset, double heightRatio, double widthRatio);
+void interpolateSameSize(unsigned char *firstData, unsigned char *secondData, BITMAPIMAGEHEADER *firstHeader, BITMAPIMAGEHEADER *secondHeader, double blendRatio, int imageSize);
