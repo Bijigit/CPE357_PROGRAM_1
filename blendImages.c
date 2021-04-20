@@ -10,9 +10,29 @@
 
 int main(int argc, char *argv[]){
 
-    char image1[] = "lion.bmp";
-    char image2[] = "flowers.bmp";
-    double blendRatio = 0.5;
+    if(argc != 5){
+        printf("Incorrect number of arguments.  Please follow the format:\n[programname] [imagefile1] [imagefile2] [ratio] [outputfile]");
+        return 0;
+    }
+    double blendRatio = atof(argv[3]);
+    if(blendRatio <= 0 || blendRatio >= 1){
+        printf("Please use a valid ratio such that 0 < ratio < 1");
+        return 0;
+    }
+    
+    //open both images in binary read mode
+    FILE *fp = fopen(argv[1], "rb");
+    FILE *fp2 = fopen(argv[2], "rb");
+    FILE *outfp = fopen(argv[4], "wb");
+
+    if(fp == NULL || fp2 == NULL){
+        printf("Invalid argument. Please make sure your image file names are correct.");
+        return 0;
+    }
+
+    //char image1[] = "lion.bmp";
+    //char image2[] = "flowers.bmp";
+    //double blendRatio = 0.3;
 
     //initialize image and file headers for both images
     BITMAPFILEHEADER fileHeader;
@@ -24,9 +44,6 @@ int main(int argc, char *argv[]){
     int secondImageSize;
     int imageSize;
 
-    //open both images in binary read mode
-    FILE *fp = fopen(image1, "rb");
-    FILE *fp2 = fopen(image2, "rb");
 
     //loads header data into its respective structure
     populateFileHeader(&fileHeader, fp);
@@ -63,8 +80,7 @@ int main(int argc, char *argv[]){
         interpolate(secondImageData, imageData, &secondImageHeader, &imageHeader, 1 - blendRatio);
     }
 
-    char firstOutput[] = "output.bmp";
-    FILE *outfp = fopen(firstOutput, "wb");
+    
     fwrite(fullHeader, fileHeader.bfOffBits, 1, outfp);    
     fwrite(imageData, imageSize, 1, outfp);
     fclose(outfp);
