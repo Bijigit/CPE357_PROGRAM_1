@@ -32,3 +32,4 @@ int getImageSize(BITMAPIMAGEHEADER *imageHeader);
 void interpolate(unsigned char *largerData, unsigned char *smallerData, BITMAPIMAGEHEADER *largerHeader, BITMAPIMAGEHEADER *smallerHeader, double blendRatio);
 int getColorIntensity(unsigned char *imageData, int x, int y, int width, int colorOffset, double heightRatio, double widthRatio);
 void interpolateSameSize(unsigned char *firstData, unsigned char *secondData, BITMAPIMAGEHEADER *firstHeader, BITMAPIMAGEHEADER *secondHeader, double blendRatio, int imageSize);
+int getFinalIntensity(unsigned char *imageData, int x, int y, int width, int colorOffset, double heightRatio, double widthRatio, double dx, double dy, int nextX, int nextY);
